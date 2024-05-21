@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: prime
+    environment:
+      MYSQL_ROOT_PASSWORD: prime@123
+      MYSQL_DATABASE: prime
+      MYSQL_USER: prime
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
