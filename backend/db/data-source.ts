@@ -1,4 +1,5 @@
 import { Receivable } from '@app/shareds/entities';
+import { Assignor } from '@app/shareds/entities/mysql/assignor.entity';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,7 +13,7 @@ const dataSourceOptions: DataSourceOptions = {
   password: process.env.DB_PASSWORD || 'prime@123',
   database: process.env.DB_DATABASE || 'prime',
   migrations: ['**/migrations/*.ts'],
-  entities: [Receivable],
+  entities: [Receivable, Assignor],
 };
 
 const dataSource = new DataSource(dataSourceOptions);
