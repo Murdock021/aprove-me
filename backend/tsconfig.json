@@ -18,6 +18,14 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "paths": {
+      "@app/shareds": [
+        "libs/shareds/src"
+      ],
+      "@app/shareds/*": [
+        "libs/shareds/src/*"
+      ]
+    }
   }
 }
