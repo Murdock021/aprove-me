@@ -1,44 +1,55 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { AssignorRepository } from './assignor.repository';
-import { Assignor } from '@app/shareds/entities/mysql/assignor.entity';
+import { Injectable } from '@nestjs/common';
 import { CreateAssignorDto } from '@app/shareds/dtos/assignor/create-assignor.dto';
 import { UpdateAssignorDto } from '@app/shareds/dtos/assignor/update-assignor.dto';
+import { Assignor } from '@app/shareds/entities/mysql/assignor.entity'; // Importe a entidade correta
 
 @Injectable()
 export class AssignorService {
-  constructor(private readonly assignorRepository: AssignorRepository) {}
+  private assignors: Assignor[] = [];
 
-  async validateAssignorExists(id: string): Promise<void> {
-    const assignor = await this.assignorRepository.findOne(id);
+  create(createAssignorDto: CreateAssignorDto): string {
+    const newAssignor: Assignor = {
+      id: this.assignors.length + 1 + '',
+      document: createAssignorDto.document,
+      email: createAssignorDto.email,
+      phone: createAssignorDto.phone,
+      name: createAssignorDto.name,
+    };
+    this.assignors.push(newAssignor);
+    return 'Assignor criado com sucesso';
+  }
 
+  findAll(): Assignor[] {
+    return this.assignors;
+  }
+
+  findOne(id: string): Assignor {
+    const assignor = this.assignors.find((a) => a.id === id);
     if (!assignor) {
-      throw new NotFoundException(`Assignor with id ${id} not found.`);
+      throw new Error('Assignor não encontrado');
     }
+    return assignor;
   }
 
-  async create(createAssignorDto: CreateAssignorDto): Promise<Assignor> {
-    return this.assignorRepository.create(createAssignorDto);
+  update(id: string, updateAssignorDto: UpdateAssignorDto): string {
+    const assignorIndex = this.assignors.findIndex((a) => a.id === id);
+    if (assignorIndex !== -1) {
+      const updatedAssignor = {
+        ...this.assignors[assignorIndex],
+        ...updateAssignorDto,
+      };
+      this.assignors[assignorIndex] = updatedAssignor;
+      return 'Assignor atualizado com sucesso';
+    }
+    return 'Assignor não encontrado';
   }
 
-  async findAll(): Promise<Assignor[]> {
-    return this.assignorRepository.findAll();
-  }
-
-  async findOne(id: string): Promise<Assignor | null> {
-    await this.validateAssignorExists(id);
-    return this.assignorRepository.findOne(id);
-  }
-
-  async update(
-    id: string,
-    updateAssignorDto: UpdateAssignorDto,
-  ): Promise<Assignor> {
-    await this.validateAssignorExists(id);
-    return this.assignorRepository.update(id, updateAssignorDto);
-  }
-
-  async remove(id: string): Promise<void> {
-    await this.validateAssignorExists(id);
-    await this.assignorRepository.remove(id);
+  remove(id: string): string {
+    const assignorIndex = this.assignors.findIndex((a) => a.id === id);
+    if (assignorIndex !== -1) {
+      this.assignors.splice(assignorIndex, 1);
+      return 'Assignor removido com sucesso';
+    }
+    return 'Assignor não encontrado';
   }
 }
