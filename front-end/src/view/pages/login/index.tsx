@@ -2,9 +2,8 @@
 
 import { UserAuthForm } from "./components/user-auth-form"
 import { BackgroundBeams } from './components/background-beams';
-import { Card, CardContent } from '@/view/components/ui/card';
-import { AlertCircle } from 'lucide-react';
-// import { Adsense } from '@ctrl/react-adsense';
+import { Button } from "@/view/components/ui/button";
+
 
 export const metadata = {
   title: "Authentication",
@@ -15,10 +14,6 @@ export default function AuthenticationPage() {
 
   return (
     <>
-      {/* <Adsense
-        client="ca-pub-6955719249375599"
-        slot="1457147089"
-      /> */}
       <div className='flex flex-row w-full'>
         <div className='bg-[#121212] w-full flex flex-row-reverse relative max-w-[621px]'>
           <BackgroundBeams />
@@ -29,20 +24,20 @@ export default function AuthenticationPage() {
             </div>
             <div className='flex flex-col gap-[16px] '>
               <div className='text-[40px] text-[#fff] font-semibold font-sans text-start title-login leading-[120%] w-[450px]'>
-                Revolucione a eficiência da sua central de pronta resposta
+              Bem-vindo ao Bankme digital. 
               </div>
               <div className='text-[18px] text-[#fff] opacity-90 font-normal text-start font-sans leading-[150%]'>
-                Aprimore processos, aumente a produtividade e ofereça um atendimento excepcional.
+              Seja o banqueiro do seu cliente
               </div>
             </div>
           </div>
         </div>
         <div className="flex relative w-full h-screen bg-[#121212] flex-col items-center justify-center md:grid ">
-          {/* <div className='flex absolute right-[32px] top-4'>
-            <Button variant="google" type="button" >
+          { <div className='flex absolute right-[32px] top-4'>
+            <Button type="button" >
               Ainda não sou cliente
             </Button>
-          </div> */}
+          </div> }
           <div className="lg:p-8 container">
             <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
 

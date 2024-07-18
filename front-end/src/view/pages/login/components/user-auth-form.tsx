@@ -77,8 +77,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
             />
           </div>
-
-
           <Button
             className="px-2"
             onClick={handleLogin}
@@ -95,11 +93,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t border-[#3e3e3e]" />
         </div>
-        {/* <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-[#121212] px-2 text-[#ede9e7]">
-            ou
-          </span>
-        </div> */}
+        { <div className="relative flex justify-center text-xs uppercase">
+        </div> }
       </div>
     </div>
   );
