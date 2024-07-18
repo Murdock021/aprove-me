@@ -10,15 +10,15 @@ import {
 
 export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {
   @IsString()
-  @IsNotEmpty({ message: 'The document field cannot be empty.' })
-  @MaxLength(25, {
-    message: 'The document field cannot be longer than 25 characters.',
+  @IsNotEmpty()
+  @MaxLength(30, {
+    message: 'The document field cannot be longer than 30 characters.',
   })
   @IsOptional()
   document?: string;
 
   @IsEmail()
-  @IsNotEmpty({ message: 'The email field cannot be empty.' })
+  @IsNotEmpty()
   @MaxLength(140, {
     message: 'The email field cannot be longer than 140 characters.',
   })
@@ -26,7 +26,7 @@ export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {
   email?: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'The phone field cannot be empty.' })
+  @IsNotEmpty()
   @MaxLength(20, {
     message: 'The phone field cannot be longer than 20 characters.',
   })
@@ -34,7 +34,7 @@ export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {
   phone?: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'The name field cannot be empty.' })
+  @IsNotEmpty()
   @MaxLength(140, {
     message: 'The name field cannot be longer than 140 characters.',
   })

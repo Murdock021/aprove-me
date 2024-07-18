@@ -1,23 +1,21 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PrismaModule } from './prisma/prisma.module';
+import { PayableModule } from './payable/payable.module';
 import { AssignorModule } from './assignor/assignor.module';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { mysqlAppTypeOrmAsyncConfig } from '@app/shareds/config/database.config';
-import { AssignorRepository } from './assignor/assignor.repository';
-import { Assignor } from '@app/shareds/entities/mysql/assignor.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    TypeOrmModule.forRootAsync(mysqlAppTypeOrmAsyncConfig),
+    PrismaModule,
+    PayableModule,
     AssignorModule,
-    TypeOrmModule.forFeature([Assignor]),
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AssignorRepository],
+  providers: [AppService],
 })
 export class AppModule {}
