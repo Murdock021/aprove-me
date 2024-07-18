@@ -1,0 +1,14 @@
+### Criar um novo Assignor ###
+
+# Request para criar um novo assignor
+POST http://localhost:3000/assignor
+Content-Type: application/json
+
+{
+  "document":"123456789",
+  "email": "email@dos.com",
+  "phone": "123456789",
+  "address": "Endereço do Assignor",
+  "name": "Nome do Assignor",
+
+}
