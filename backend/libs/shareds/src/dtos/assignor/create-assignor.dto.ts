@@ -30,8 +30,8 @@ export class CreateAssignorDto {
 
   @IsString()
   @IsNotEmpty({ message: 'The name field is required.' })
-  @MaxLength(125, {
-    message: 'The name field cannot be longer than 125 characters.',
+  @MaxLength(140, {
+    message: 'The name field cannot be longer than 140 characters.',
   })
   name: string;
 }
