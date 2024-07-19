@@ -4,9 +4,10 @@ import { PayableService } from './payable.service';
 import { PayableRepository } from './payable.repository';
 import { PrismaService } from '../prisma/prisma.service';
 import { PayableController } from './payable.controller';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
-  imports: [],
+  imports: [UsersModule],
   controllers: [PayableController],
   providers: [PayableService, PayableRepository, PrismaService],
 })
