@@ -3,6 +3,7 @@ import { IsString, IsEmail, IsNotEmpty, MaxLength } from 'class-validator';
 
 export class CreateAssignorDto {
   @IsString()
+  @ApiProperty({ example: '898.932.009-70' })
   @IsNotEmpty({ message: 'The document field is required.' })
   @MaxLength(30, {
     message: 'The document field cannot be longer than 30 characters.',
@@ -29,6 +30,7 @@ export class CreateAssignorDto {
   phone: string;
 
   @IsString()
+  @ApiProperty({ example: 'John Doe' })
   @IsNotEmpty({ message: 'The name field is required.' })
   @MaxLength(140, {
     message: 'The name field cannot be longer than 140 characters.',

@@ -5,6 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {
   @IsString()
+  @ApiProperty({ example: '898.932.009-70' })
   @IsOptional()
   @MaxLength(30, {
     message: 'The document field cannot be longer than 30 characters.',
@@ -31,6 +32,7 @@ export class UpdateAssignorDto extends PartialType(CreateAssignorDto) {
   phone?: string;
 
   @IsString()
+  @ApiProperty({ example: 'John Doe' })
   @IsOptional()
   @MaxLength(140, {
     message: 'The name field cannot be longer than 140 characters.',

@@ -1,22 +1,9 @@
 version: '3'
 services:
-  mysql:
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 512M
-
-    image: mysql
+  backend:
+    image: backend
     ports:
-      - '${DB_PORT}:3306'
+      - "3000:3000"
     env_file:
-      - .env
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - ./mysql-data:/var/lib/mysql
+      - ./backend/.env
+  

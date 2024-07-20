@@ -8,17 +8,25 @@ import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
 import { SignInDto, SignUpDto } from 'src/shareds';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  private EXPIRATION_TIME = '1m';
-  private ISSUER = 'Bankme';
-  private AUDIENCE = 'users';
+  private EXPIRATION_TIME: string;
+  private ISSUER: string;
+  private AUDIENCE: string;
 
   constructor(
     private readonly jwtService: JwtService,
     private readonly usersService: UsersService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) {
+    this.EXPIRATION_TIME = this.configService.get<string>(
+      'JWT_EXPIRATION_TIME',
+    );
+    this.ISSUER = this.configService.get<string>('JWT_ISSUER');
+    this.AUDIENCE = this.configService.get<string>('JWT_AUDIENCE');
+  }
 
   async signUp(signUpDto: SignUpDto) {
     const { login } = signUpDto;
