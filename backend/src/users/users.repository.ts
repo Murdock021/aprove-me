@@ -1,5 +1,5 @@
-import { CreateUserDto } from '@app/shareds/dtos/users/create-user.dto';
-import { UpdateUserDto } from '@app/shareds/dtos/users/update-user.dto';
+import { CreateUserDto } from 'src/shareds/dtos/users/create-user.dto';
+import { UpdateUserDto } from 'src/shareds/dtos/users/update-user.dto';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 

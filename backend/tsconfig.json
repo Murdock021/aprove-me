@@ -21,10 +21,10 @@
     "moduleResolution": "node",
     "paths": {
       "@app/shareds": [
-        "libs/shareds/src"
+        "src/shareds/src"
       ],
       "@app/shareds/*": [
-        "libs/shareds/src/*"
+        "src/shareds/src/*"
       ]
     }
   }

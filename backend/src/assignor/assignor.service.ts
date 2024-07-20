@@ -1,5 +1,5 @@
-import { CreateAssignorDto } from '@app/shareds/dtos/assignor/create-assignor.dto';
-import { UpdateAssignorDto } from '@app/shareds/dtos/assignor/update-assignor.dto';
+import { CreateAssignorDto } from 'src/shareds/dtos/assignor/create-assignor.dto';
+import { UpdateAssignorDto } from 'src/shareds/dtos/assignor/update-assignor.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Assignor } from '@prisma/client';
 import { AssignorRepository } from './assignor.repository';

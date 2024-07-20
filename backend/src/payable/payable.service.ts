@@ -1,5 +1,5 @@
-import { CreatePayableDto } from '@app/shareds/dtos/payable/create-payable.dto';
-import { UpdatePayableDto } from '@app/shareds/dtos/payable/update-payable.dto';
+import { CreatePayableDto } from 'src/shareds/dtos/payable/create-payable.dto';
+import { UpdatePayableDto } from 'src/shareds/dtos/payable/update-payable.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Payable } from '@prisma/client';
 import { PayableRepository } from './payable.repository';
