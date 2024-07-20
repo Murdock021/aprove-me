@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
 
-  const globalPrefix = 'backend';
+  const globalPrefix = 'bankme';
   app.setGlobalPrefix(globalPrefix);
 
   const config = new DocumentBuilder()
