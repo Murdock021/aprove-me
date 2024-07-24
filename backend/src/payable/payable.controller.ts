@@ -8,12 +8,22 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { Payable } from '@prisma/client';
 import { PayableService } from './payable.service';
-import { ApiOperation, ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiTags,
+  ApiResponse,
+  ApiBody,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('Payable')
+@UseGuards(AuthGuard)
+@ApiBearerAuth()
 @Controller('integrations/payable')
 export class PayableController {
   constructor(private readonly payableService: PayableService) {}

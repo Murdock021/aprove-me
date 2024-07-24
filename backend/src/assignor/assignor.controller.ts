@@ -12,10 +12,17 @@ import { AssignorService } from './assignor.service';
 import { Assignor } from '@prisma/client';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { CreateAssignorDto, UpdateAssignorDto } from 'src/shareds';
-import { ApiOperation, ApiTags, ApiResponse, ApiBody } from '@nestjs/swagger';
+import {
+  ApiOperation,
+  ApiTags,
+  ApiResponse,
+  ApiBody,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 
 @ApiTags('Assignor')
 @UseGuards(AuthGuard)
+@ApiBearerAuth()
 @Controller('/integrations/assignor')
 export class AssignorController {
   constructor(private readonly assignorService: AssignorService) {}
