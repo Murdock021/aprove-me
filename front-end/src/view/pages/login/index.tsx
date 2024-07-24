@@ -3,6 +3,7 @@
 import { UserAuthForm } from "./components/user-auth-form"
 import { BackgroundBeams } from './components/background-beams';
 import { Button } from "@/view/components/ui/button";
+import logo from "../../../assets/logo-bankme.png"
 
 
 export const metadata = {
@@ -20,7 +21,7 @@ export default function AuthenticationPage() {
           <div className='h-full w-full opacity-5' style={{ background: "#0a36b0" }} />
           <div className='flex flex-col w-full h-full p-10 justify-center absolute'>
             <div className='flex w-full justify-start text-[#fff] absolute top-10'>
-              PRIME BANK
+              <img src= {logo} className="w-[40px] h-[40px]" alt="logo" />
             </div>
             <div className='flex flex-col gap-[16px] '>
               <div className='text-[40px] text-[#fff] font-semibold font-sans text-start title-login leading-[120%] w-[450px]'>
