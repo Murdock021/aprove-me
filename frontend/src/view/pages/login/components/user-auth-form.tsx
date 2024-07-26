@@ -13,16 +13,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "@/view/components/ui/use-toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
-const loginShema = z.object({ login: z.string().nonempty({ message: 'Campo Obrigatório' }), password: z.string().nonempty({ message: 'Campo Obrigatório' }) })
+const loginSchema = z.object({ login: z.string().nonempty({ message: 'Campo Obrigatório' }), password: z.string().nonempty({ message: 'Campo Obrigatório' }) })
 
-type LoginFormInputs = z.infer <typeof loginShema>
+type LoginFormInputs = z.infer <typeof loginSchema>
 
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-const {register, handleSubmit, formState:{errors,isLoading}}= useForm <LoginFormInputs> ({ resolver: zodResolver(loginShema)})
+const {register, handleSubmit, formState:{errors,isLoading}}= useForm <LoginFormInputs> ({ resolver: zodResolver(loginSchema)})
 
 
   const handleLogin:SubmitHandler <LoginFormInputs> = async (data) => {

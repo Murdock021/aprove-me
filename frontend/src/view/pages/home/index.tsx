@@ -25,10 +25,12 @@ import {
     TableRow,
 } from "@/view/components/ui/table"
 import { Link } from "react-router-dom"
+import { CreateAssignorModal } from "./components/create-assignor-modal"
 export function Home() {
     return (
 
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+          <CreateAssignorModal/>
             <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
                 <Card x-chunk="dashboard-01-chunk-0">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -94,7 +96,7 @@ export function Home() {
                                 Recent transactions from your store.
                             </CardDescription>
                         </div>
-                        <Button asChild size="sm" className="ml-auto gap-1">
+                        <Button asChild size="sm" className="ml-auto text- white  gap-1">
                             <Link to="#">
                                 View All
                                 <ArrowUpRight className="h-4 w-4" />

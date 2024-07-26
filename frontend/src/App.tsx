@@ -4,7 +4,7 @@ import { ClientRoutes } from "./servers/routes";
 
 function App() {
   return (
-    <>
+    <div className="bg-background">
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -16,7 +16,7 @@ function App() {
           />
         </Routes>
       </Router>
-    </>
+    </div>
   )
 }
 

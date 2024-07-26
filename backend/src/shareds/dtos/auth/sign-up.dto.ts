@@ -3,8 +3,8 @@ import { CreateUserDto } from '../users';
 
 export class SignUpDto extends CreateUserDto {
   @ApiProperty({
-    description: 'The email of the user',
-    example: 'user@example.com',
+    description: 'The user',
+    example: 'string',
   })
   login: string;
 
