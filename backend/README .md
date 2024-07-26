@@ -1,4 +1,4 @@
-![Logo]()
+![Logo](https://bankme.tech/hs-fs/hubfs/BANKME%20AZUL%20NOVO-4.png?width=120&height=67&name=BANKME%20AZUL%20NOVO-4.png)
 
 # <div align="center">BANKME - BACKEND</div>
 
