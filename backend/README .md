@@ -66,7 +66,7 @@ backend/
 └── tsconfig.json
 ```
 
-# 🌐 Technologies
+#  Technologies
 <div align="rigth">
   <img align="center" alt="Ts" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
   <img align="center" alt="Nest" src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white">
