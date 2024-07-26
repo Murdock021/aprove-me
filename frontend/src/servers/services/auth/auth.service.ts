@@ -3,23 +3,23 @@ import { CONFIG } from "@/servers/config";
 import { apiAuth } from "@/servers/api";
 
 export interface LoginRequest {
-  email: string;
+  login: string;
   password: string;
 }
 
 export interface LoginAuth {
-  access_token: string;
-  email: string;
-  role: string;
+  login: string;
+  password: string;
+  token: string;
 }
 
 export async function loginAuth(
   signin: LoginRequest
 ): Promise<AxiosResponse<LoginAuth>> {
-  const url = `${CONFIG.host}${CONFIG.port_auth}/auth/login`;
-
+  const url = `${CONFIG.host}bankme/integrations/auth/sign-in`;
   try {
     const response = await apiAuth.post<LoginAuth>(url, signin);
+    console.log(response);
     return response;
   } catch (error: unknown) {
     if (error instanceof Error) {

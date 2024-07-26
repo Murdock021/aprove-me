@@ -7,58 +7,57 @@ import { Input } from "@/view/components/ui/input";
 import { Label } from "@/view/components/ui/label";
 import { useAuth } from "@/servers/context/AuthContext";
 import { useNavigate } from "react-router";
+import { z } from "zod";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "@/view/components/ui/use-toast";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> { }
+const loginShema = z.object({ login: z.string().nonempty({ message: 'Campo Obrigatório' }), password: z.string().nonempty({ message: 'Campo Obrigatório' }) })
+
+type LoginFormInputs = z.infer <typeof loginShema>
+
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState<string | null>(null);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
+const {register, handleSubmit, formState:{errors,isLoading}}= useForm <LoginFormInputs> ({ resolver: zodResolver(loginShema)})
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }
 
-  const handleLogin = async () => {
+  const handleLogin:SubmitHandler <LoginFormInputs> = async (data) => {
     try {
-      const loginSuccess = await login(username, password);
-      if (loginSuccess) {
-        navigate("dashboard");
-      } else {
-        setError("Credenciais inválidas. Tente novamente.");
-      }
+      const loginSuccess = await login(data.login, data.password);
+      console.log(loginSuccess)
+      navigate("home")
     } catch (error) {
-      setError("Erro ao fazer login. Tente novamente mais tarde.");
+      toast({
+        variant:'destructive',
+        title: 'Erro ao realizar login',
+      })
     }
   };
 
   return (
     <div className={cn("grid gap-6 ", className)} {...props}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(handleLogin)}>
         <div className="grid gap-2">
           <div className="grid gap-1">
             <Label className="text-[#A0A0A0]" htmlFor="email">
-              Email
+              Usuario
             </Label>
             <Input
-              id="email"
-              placeholder="nome@exemplo.com"
-              type="email"
+              id="login"
+              type="text"
               autoCapitalize="none"
               autoComplete="new-password"
               autoCorrect="off"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
               disabled={isLoading}
+              {...register('login')}
             />
+            {errors.login && (
+              <span className="text-red-500">{errors.login.message}</span>
+            )}
           </div>
           <div className="grid gap-1">
             <Label className="text-[#A0A0A0]" htmlFor="password">
@@ -71,15 +70,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="new-password"
               autoCorrect="off"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               disabled={isLoading}
-
+              {...register('password')}
             />
+            {errors.password && (
+              <span className="text-red-500">{errors.password.message}</span>
+            )}
           </div>
           <Button
             className="px-2"
-            onClick={handleLogin}
+            type="submit"
             disabled={isLoading}
           >
             {isLoading && (
@@ -93,8 +93,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t border-[#3e3e3e]" />
         </div>
-        { <div className="relative flex justify-center text-xs uppercase">
-        </div> }
+        {<div className="relative flex justify-center text-xs uppercase">
+        </div>}
       </div>
     </div>
   );

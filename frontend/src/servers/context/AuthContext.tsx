@@ -3,13 +3,13 @@ import { loginAuth, LoginAuth, LoginRequest } from "../services/auth/auth.servic
 import { AxiosResponse } from 'axios';
 
 type User = {
-  email: string;
-  roles: string[];
+  login: string;
+  token: string;
 };
 
 type AuthContextType = {
   user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (login: string, password: string) => void;
   logout: () => void;
   loading: boolean;
 };
@@ -47,23 +47,17 @@ function useProvideAuth() {
     setLoading(false);
   }, []);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (login: string, password: string ) => {
     try {
-      const response: AxiosResponse<LoginAuth> = await loginAuth({ email, password } as LoginRequest);
-      if (response.status === 200 && response.data.access_token) {
-        const userData = {
-          email: response.data.email,
-          roles: response.data.role ? [response.data.role] : []
-        };
-        setUser(userData);
-        localStorage.setItem("user", JSON.stringify(userData));
-        localStorage.setItem("token", response.data.access_token);
-        return true;
-      } else {
-        return false;
-      }
+      const response: AxiosResponse<LoginAuth> = await loginAuth({ login, password } as LoginRequest);
+      const userData = {
+        login: response.data.login,
+        token: response.data?.token
+      };
+      setUser(userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("token", response.data.token);
     } catch (error) {
-      console.error('Login error:', error);
       return false;
     }
   };
