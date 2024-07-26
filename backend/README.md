@@ -30,9 +30,6 @@ This client processes a significant volume of receivables daily, and our operati
 Receivables are digital representations of documents that simulate debts to be collected. For Bankme, it is essential to integrate this information into our commercial workflow with this client, aiming to optimize processes and ensure greater operational efficiency.
 
 
-#### Technologies Used
-
-Our backend is developed using modern languages and the best technologies on the market, ensuring performance, scalability, and security in all operations.
 
 # Project Structure
 
