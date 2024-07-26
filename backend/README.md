@@ -113,11 +113,12 @@ Commands to run:
 
 1. Create a Docker image:
 
-    docker build -t backend .
+        docker build -t backend .
 
 2. Start the services defined in the "docker-compose.yml" file in Docker containers.
 
-    docker-compose up
+        docker-compose up
+   
 
 ---
 
