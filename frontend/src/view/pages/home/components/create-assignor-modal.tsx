@@ -10,25 +10,45 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { useState } from 'react';
+import {
+  AssignorProvider,
+  useAssignor,
+} from '@/servers/context/AssignorContext';
 
 const AssignorFormSchema = z.object({
   name: z
     .string()
-    .min(2, {
-      message: 'O nome deve ter pelo menos 2 caracteres.',
+    .min(3, {
+      message: 'O nome deve ter pelo menos 3 caracteres.',
     })
     .max(140, {
       message: 'O nome não deve ter mais de 140 caracteres',
     }),
-  phone: z.string({
-    required_error: 'O telefone é obrigatório.',
-  }),
-  email: z.string({
-    required_error: ' O E-mail é obrigatório .',
-  }),
-  document: z.string({
-    required_error: 'O documento é obrigatório.',
-  }),
+  phone: z
+    .string({
+      required_error: 'O telefone é obrigatório.',
+    })
+    .max(20, {
+      message: 'O Telefone não deve ter mais de 20 caracteres',
+    }),
+
+  email: z
+    .string({
+      required_error: ' O E-mail é obrigatório .',
+    })
+    .email({
+      message: 'O formato email é invalido',
+    })
+    .max(140, {
+      message: 'O Email não deve ter mais de 140 caracteres',
+    }),
+  document: z
+    .string({
+      required_error: 'O documento é obrigatório.',
+    })
+    .max(30, {
+      message: 'O CPF não pode ter mais de 30 caracteres',
+    }),
 });
 
 const PayableFormSchema = z.object({
@@ -45,14 +65,23 @@ type AssignorFormValues = z.infer<typeof AssignorFormSchema>;
 type PayableFormValues = z.infer<typeof PayableFormSchema>;
 
 export function CreateAssignorModal() {
-  const [formType, setForType] = useState<'assignor' | 'payable'>();
+  return (
+    <AssignorProvider>
+      <CreateAssignorModalContent />
+    </AssignorProvider>
+  );
+}
 
+export function CreateAssignorModalContent() {
+  const [formType, setForType] = useState<'assignor' | 'payable'>();
+  const { addAssignor } = useAssignor();
   const {
     formState: { errors: assignorErrors },
     handleSubmit: handleAssignorSubmit,
     register: registerAssignor,
   } = useForm<AssignorFormValues>({
     resolver: zodResolver(AssignorFormSchema),
+    mode: 'onChange',
   });
 
   const {
@@ -64,8 +93,20 @@ export function CreateAssignorModal() {
     mode: 'onChange',
   });
 
-  function onSubmit(data: AssignorFormValues | PayableFormValues) {
+  async function onSubmit(data: AssignorFormValues | PayableFormValues) {
     console.log(data);
+    try {
+      if (formType === 'assignor') {
+        const response = await addAssignor({
+          document: data.document,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -112,7 +153,7 @@ export function CreateAssignorModal() {
               </div>
               <div>
                 <Label>Telefone</Label>
-                <Input {...registerAssignor('phone')} />
+                <Input maskType="phone" {...registerAssignor('phone')} />
                 {assignorErrors.phone && (
                   <span className="text-red-500">
                     {assignorErrors.phone.message}
@@ -120,8 +161,8 @@ export function CreateAssignorModal() {
                 )}
               </div>
               <div>
-                <Label>Documento</Label>
-                <Input {...registerAssignor('document')} />
+                <Label>CPF</Label>
+                <Input maskType="cpf" {...registerAssignor('document')} />
                 {assignorErrors.document && (
                   <span className="text-red-500">
                     {assignorErrors.document.message}
@@ -154,7 +195,7 @@ export function CreateAssignorModal() {
             </>
           )}
 
-          <Button type="submit">
+          <Button type="submit" variant={'secondary'}>
             {formType === 'assignor' ? 'Criar Cedente' : 'Criar Pagáveis'}
           </Button>
         </form>
