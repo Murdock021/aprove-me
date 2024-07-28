@@ -85,7 +85,7 @@ const {register, handleSubmit, formState:{errors,isLoading}}= useForm <LoginForm
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Faça login com e-mail
+            Faça login com usuário 
           </Button>
         </div>
       </form>
