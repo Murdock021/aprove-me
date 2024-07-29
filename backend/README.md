@@ -105,7 +105,7 @@ To run this application, follow these steps:
 
 Run the command below to check the tests:
 
-    npm run test
+        pnpm run test
 
 ### Docker
 
