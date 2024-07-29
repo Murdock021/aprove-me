@@ -9,7 +9,7 @@ import {
 } from '@/view/components/ui/dropdown-menu';
 import { Sheet } from '@/view/components/ui/sheet';
 import { cn } from '@/servers/lib/lib';
-import { CircleUser, Package2 } from 'lucide-react';
+import { CircleUser } from 'lucide-react';
 import { Button } from '@/view/components/ui/button';
 
 export function HeaderNav({
@@ -27,7 +27,11 @@ export function HeaderNav({
             to="#"
             className="flex items-center gap-2 text-lg font-semibold md:text-base"
           >
-            <Package2 className="h-6 w-6" />
+            <img
+              src="https://bankme.tech/hs-fs/hubfs/BANKME%20AZUL%20NOVO-4.png?width=120&height=67&name=BANKME%20AZUL%20NOVO-4.png"
+              alt="Acme Inc"
+              className="h-30 w-40"
+            />
             <span className="sr-only">Acme Inc</span>
           </Link>
         </nav>
