@@ -33,7 +33,7 @@ export class AuthService {
     const user = await this.usersService.findLogin(login);
 
     if (user !== null) {
-      throw new ConflictException('Login alread in use!');
+      throw new ConflictException('Login already in use!');
     }
 
     return await this.usersService.create(signUpDto);
