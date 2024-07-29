@@ -13,10 +13,12 @@ export interface ListPayablesResponse {
   payables: Payable[];
 }
 
-export async function listPayables(): Promise<AxiosResponse<ListPayablesResponse>> {
+export async function listPayables(): Promise<
+  AxiosResponse<ListPayablesResponse>
+> {
   const url = `${CONFIG.host}bankme/integrations/payable`;
   const token = localStorage.getItem('token');
-  
+
   try {
     const response = await apiAuth.get<ListPayablesResponse>(url, {
       headers: {
@@ -27,10 +29,6 @@ export async function listPayables(): Promise<AxiosResponse<ListPayablesResponse
 
     return response;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    } else {
-      throw new Error('An unexpected error occurred');
-    }
+    return error;
   }
 }

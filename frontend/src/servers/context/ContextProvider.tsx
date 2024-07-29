@@ -13,6 +13,13 @@ import {
   createPayable,
 } from '../services/payable/created-payable.service';
 import { listPayables as fetchPayables } from '../services/payable/list-payable.service';
+import {
+  updatePayable,
+  updatePayableEdit,
+  UpdatePayableRequest,
+} from '../services/payable/edit-payable.service';
+import { deletePayable } from '../services/payable/delete-payable.service';
+import { deletePayableService } from '../services/payable/delet-payable.service';
 
 type Assignor = {
   document: string;
@@ -37,6 +44,8 @@ type AssignorContextType = {
   addPayable: (payableData: PayableRequest) => Promise<boolean>;
   listAssignors: () => Promise<Assignor[] | null>;
   listPayables: () => Promise<Payable[] | null>;
+  updatePayable: (payableData: UpdatePayableRequest) => Promise<boolean>;
+  deletePayable: (id: string) => Promise<boolean>;
   clearAssignor: () => void;
   clearPayable: () => void;
   loading: boolean;
@@ -128,8 +137,6 @@ function useProvideAssignor() {
         emissionDate: response.data.emissionDate,
         assignorId: response.data.assignorId,
       };
-      console.log(response, 'response table');
-
       setPayable(newPayable);
       localStorage.setItem('payable', JSON.stringify(newPayable));
       setLoading(false);
@@ -151,7 +158,7 @@ function useProvideAssignor() {
     } catch (error) {
       setLoading(false);
       console.error('Failed to list assignors:', error);
-      return null;
+      return error;
     }
   };
 
@@ -165,7 +172,35 @@ function useProvideAssignor() {
     } catch (error) {
       setLoading(false);
       console.error('Failed to list payables:', error);
-      return null;
+      return error;
+    }
+  };
+
+  const updatePayable = async (
+    payableData: UpdatePayableRequest,
+  ): Promise<boolean> => {
+    setLoading(true);
+    try {
+      const response = await updatePayableEdit(payableData);
+      setLoading(false);
+      return response;
+    } catch (error) {
+      setLoading(false);
+      console.error('Failed to update payable:', error);
+      return false;
+    }
+  };
+
+  const deletePayable = async (id: string): Promise<boolean> => {
+    setLoading(true);
+    try {
+      const response = await deletePayableService(id);
+      setLoading(false);
+      return response;
+    } catch (error) {
+      setLoading(false);
+      console.error('Failed to delete payable:', error);
+      return false;
     }
   };
 
@@ -188,6 +223,8 @@ function useProvideAssignor() {
     addPayable,
     listAssignors,
     listPayables,
+    updatePayable,
+    deletePayable,
     clearAssignor,
     clearPayable,
     loading,

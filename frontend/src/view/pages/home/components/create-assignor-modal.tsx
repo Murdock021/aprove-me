@@ -1,53 +1,32 @@
-import { Button } from '@/view/components/ui/button';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogContent,
   DialogTrigger,
 } from '@/view/components/ui/dialog';
+import { Button } from '@/view/components/ui/button';
 import { Input } from '@/view/components/ui/input';
 import { Label } from '@/view/components/ui/label';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useState } from 'react';
-import {
-  AssignorProvider,
-  useAssignor,
-} from '@/servers/context/ContextProvider';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useAssignor } from '@/servers/context/ContextProvider';
 
 const AssignorFormSchema = z.object({
   name: z
     .string()
-    .min(3, {
-      message: 'O nome deve ter pelo menos 3 caracteres.',
-    })
-    .max(140, {
-      message: 'O nome não deve ter mais de 140 caracteres',
-    }),
+    .min(3, { message: 'O nome deve ter pelo menos 3 caracteres.' })
+    .max(140, { message: 'O nome não deve ter mais de 140 caracteres' }),
   phone: z
-    .string({
-      required_error: 'O telefone é obrigatório.',
-    })
-    .max(20, {
-      message: 'O Telefone não deve ter mais de 20 caracteres',
-    }),
+    .string({ required_error: 'O telefone é obrigatório.' })
+    .max(20, { message: 'O Telefone não deve ter mais de 20 caracteres' }),
   email: z
-    .string({
-      required_error: 'O E-mail é obrigatório.',
-    })
-    .email({
-      message: 'O formato de e-mail é inválido',
-    })
-    .max(140, {
-      message: 'O E-mail não deve ter mais de 140 caracteres',
-    }),
+    .string({ required_error: 'O E-mail é obrigatório.' })
+    .email({ message: 'O formato de e-mail é inválido' })
+    .max(140, { message: 'O E-mail não deve ter mais de 140 caracteres' }),
   document: z
-    .string({
-      required_error: 'O documento é obrigatório.',
-    })
-    .max(30, {
-      message: 'O CPF não pode ter mais de 30 caracteres',
-    }),
+    .string({ required_error: 'O documento é obrigatório.' })
+    .max(30, { message: 'O CPF não pode ter mais de 30 caracteres' }),
 });
 
 const PayableFormSchema = z.object({
@@ -68,21 +47,13 @@ interface CreateAssignorModalContentProps {
   assignorId: string; // ID do cedente para criar o pagável
 }
 
-export function CreateAssignorModal() {
-  return (
-    <AssignorProvider>
-      <CreateAssignorModalContent assignorId="" />
-    </AssignorProvider>
-  );
-}
-
 export function CreateAssignorModalContent({
   hideCreateAssignor = false,
   assignorId,
 }: CreateAssignorModalContentProps) {
   const [formType, setForType] = useState<'assignor' | 'payable'>();
-  const { addAssignor, addPayable, assignors } = useAssignor();
-  console.log('aqui ', assignors);
+  const [isOpen, setIsOpen] = useState(false);
+  const { addAssignor, addPayable } = useAssignor();
 
   const {
     formState: { errors: assignorErrors },
@@ -101,11 +72,8 @@ export function CreateAssignorModalContent({
     resolver: zodResolver(PayableFormSchema),
     mode: 'onChange',
   });
-  console.log(assignorId);
+
   async function onSubmit(data: AssignorFormValues | PayableFormValues) {
-    console.log(data);
-    const emissionDate = new Date(data.issueDate);
-    const numericValue = parseFloat(data.value.replace(',', '.'));
     try {
       if (formType === 'assignor') {
         await addAssignor({
@@ -115,34 +83,42 @@ export function CreateAssignorModalContent({
           phone: data.phone,
         });
       } else {
-        const response = await addPayable({
+        const emissionDate = new Date(data.issueDate);
+        const numericValue = parseFloat(data.value.replace(',', '.'));
+        await addPayable({
           assignorId,
           value: numericValue,
           emissionDate,
         });
-        console.log(response, 'Response page');
       }
+      setIsOpen(false);
     } catch (error) {
       console.error(error);
     }
   }
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <div className="flex justify-center gap-[20px]">
         {!hideCreateAssignor ? (
           <DialogTrigger
-            value={'assignor'}
-            onClick={() => setForType('assignor')}
+            asChild
+            onClick={() => {
+              setForType('assignor');
+              setIsOpen(true);
+            }}
           >
-            Criar Cedente
+            <Button>Criar Cedente</Button>
           </DialogTrigger>
         ) : (
           <DialogTrigger
-            value={'payable'}
-            onClick={() => setForType('payable')}
+            asChild
+            onClick={() => {
+              setForType('payable');
+              setIsOpen(true);
+            }}
           >
-            Criar Pagáveis
+            <Button>Criar Pagáveis</Button>
           </DialogTrigger>
         )}
       </div>
